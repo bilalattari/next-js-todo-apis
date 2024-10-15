@@ -2,7 +2,9 @@ import TodoForm from "@/components/TodoForm";
 import ListItem from "@/components/TodoListItem";
 
 export default async function Home() {
-  let res = await fetch("http://localhost:3000/api/todos");
+  let res = await fetch("http://localhost:3000/api/todos", {
+    cache: "no-cache",
+  });
   res = await res.json();
   return (
     <div className="container mx-auto p-10">
@@ -10,7 +12,7 @@ export default async function Home() {
 
       <TodoForm />
       {res.todos.map((data) => (
-        <ListItem todo={data} key={data.id} />
+        <ListItem todo={data} key={data._id} />
       ))}
     </div>
   );

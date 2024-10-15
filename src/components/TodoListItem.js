@@ -4,11 +4,11 @@ import { deleteTodo, updateTodo } from "@/actions/todos";
 
 export default function ListItem({ todo }) {
   const handleOnClickItem = async () => {
-    await updateTodo(todo.id);
+    await updateTodo(todo._id);
   };
 
   const handleOnDelItem = async () => {
-    await deleteTodo(todo.id);
+    await deleteTodo(todo._id);
   };
   return (
     <div className="flex border p-2 my-1 w-2/3 mx-auto">
