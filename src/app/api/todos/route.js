@@ -3,8 +3,7 @@ import { connectDB } from "@/lib/dbConnect";
 
 export async function GET(request) {
   await connectDB();
-
-  const todos = await TodoModal.find();
+  const todos = await TodoModal.find().populate("user", "fullname"); 
   return Response.json({
     todos,
     msg: "Todos Fetched Successfully",
@@ -14,13 +13,8 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     let todo = await request.json();
-    console.log("Todos=>", {
-      task: todo.task,
-      isCompleted: false,
-    });
     const newTodo = await new TodoModal({
-      task: todo.task,
-      isCompleted: false,
+      ...todo,
     });
     await newTodo.save();
 
@@ -29,7 +23,13 @@ export async function POST(request) {
       msg: "Todos Added Successfully",
     });
   } catch (err) {
-    console.log(err);
+    console.log("error=>", err);
+    return Response.error(
+      {
+        msg: "Something went wrong",
+      },
+      { status: 400 }
+    );
   }
 }
 

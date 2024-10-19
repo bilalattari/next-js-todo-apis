@@ -10,7 +10,7 @@ export async function addTodo(obj) {
     });
     revalidatePath("/");
   } catch (err) {
-    console.log(err);
+    throw new Error(err);
   }
 }
 
